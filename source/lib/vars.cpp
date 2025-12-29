@@ -18,6 +18,7 @@ GNU General Public License for more details.
 #include "script.h"
 #include "globaldata.h"
 #include "script_func_impl.h"
+#include "touchpad.h"
 
 
 
@@ -1463,4 +1464,12 @@ BIV_DECL_R(BIV_TimeIdle)
 			_f_return_empty; // Cause any attempt at math to throw.
 	}
 	_f_return_i(GetTickCount() - time_last_input);
+}
+
+
+BIV_DECL_R(BIV_TouchpadContact)
+// Returns the number of fingers currently touching the touchpad.
+// Returns 0 if no contact or if touchpad detection is not available.
+{
+	_f_return_i(TouchpadGetContactCount());
 }

@@ -278,6 +278,7 @@ VarEntry g_BIV_A[] =
 	A_(TimeSinceThisHotkey),
 	A_w(TitleMatchMode),
 	A_wx(TitleMatchModeSpeed, BIV_TitleMatchModeSpeed, BIV_TitleMatchMode_Set),
+	A_x(TouchpadContact, BIV_TouchpadContact),
 	A_(TrayMenu),
 	A_x(UserName, BIV_UserName_ComputerName),
 	A_x(WDay, BIV_DateTime),

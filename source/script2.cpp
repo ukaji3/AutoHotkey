@@ -21,6 +21,7 @@ GNU General Public License for more details.
 #include "application.h" // for MsgSleep()
 #include "script_func_impl.h"
 #include "abi.h"
+#include "touchpad.h" // for touchpad contact detection
 
 
 
@@ -376,6 +377,9 @@ LRESULT CALLBACK MainWindowProc(HWND hWnd, UINT iMsg, WPARAM wParam, LPARAM lPar
 	case WM_DESTROY:
 		if (hWnd == g_hWnd) // i.e. not anything other than the main window.
 		{
+			// Cleanup touchpad detection
+			TouchpadCleanup();
+			
 			if (!g_DestroyWindowCalled)
 				// This is done because I believe it's possible for a WM_DESTROY message to be received
 				// even though we didn't call DestroyWindow() ourselves (e.g. via DefWindowProc() receiving
@@ -401,7 +405,15 @@ LRESULT CALLBACK MainWindowProc(HWND hWnd, UINT iMsg, WPARAM wParam, LPARAM lPar
 		// MSDN: If an application processes this message, it should return zero to continue
 		// creation of the window. If the application returns 1, the window is destroyed and
 		// the CreateWindowEx or CreateWindow function returns a NULL handle.
+		// Initialize touchpad contact detection
+		TouchpadInit(hWnd);
 		return 0;
+
+	case WM_INPUT:
+		// Process Raw Input for touchpad contact detection
+		if (TouchpadProcessRawInput(lParam))
+			return 0; // Message was handled
+		break; // Let DefWindowProc handle other raw input
 
 	case WM_WINDOWPOSCHANGED:
 		if (hWnd == g_hWnd && (LPWINDOWPOS(lParam)->flags & SWP_HIDEWINDOW) && g_script.mIsReadyToExecute)

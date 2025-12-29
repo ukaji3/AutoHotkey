@@ -20,6 +20,7 @@ GNU General Public License for more details.
 #include "util.h" // for snprintfcat()
 #include "window.h" // for MsgBox()
 #include "application.h" // For MsgSleep().
+#include "touchpad.h" // For touchpad contact detection.
 
 // Declare static variables (global to only this file/module, i.e. no external linkage):
 static HANDLE sKeybdMutex = NULL;

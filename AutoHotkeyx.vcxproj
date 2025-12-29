@@ -226,6 +226,7 @@
     <ClCompile Include="source\hotkey.cpp" />
     <ClCompile Include="source\input_object.cpp" />
     <ClCompile Include="source\keyboard_mouse.cpp" />
+    <ClCompile Include="source\touchpad.cpp" />
     <ClCompile Include="source\lib\CCallback.cpp" />
     <ClCompile Include="source\lib\DllCall.cpp" />
     <ClCompile Include="source\lib\drive.cpp">
@@ -302,6 +303,7 @@
     <ClInclude Include="source\input_object.h" />
     <ClInclude Include="source\keyboard_mouse.h" />
     <ClInclude Include="source\KuString.h" />
+    <ClInclude Include="source\touchpad.h" />
     <ClInclude Include="source\lib_pcre\pcre\pcret.h" />
     <ClInclude Include="source\MdType.h" />
     <ClInclude Include="source\os_version.h" />
