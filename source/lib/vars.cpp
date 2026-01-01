@@ -1468,8 +1468,9 @@ BIV_DECL_R(BIV_TimeIdle)
 
 
 BIV_DECL_R(BIV_TouchpadContact)
-// Returns the number of fingers currently touching the touchpad.
+// Returns the number of valid finger contacts (Confidence=1 only, excluding palms).
 // Returns 0 if no contact or if touchpad detection is not available.
+// Falls back to total contact count if device doesn't support Confidence bit.
 {
-	_f_return_i(TouchpadGetContactCount());
+	_f_return_i(TouchpadGetFingerCount());
 }

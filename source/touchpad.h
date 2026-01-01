@@ -29,6 +29,9 @@ surface, enabling "touchpad as modifier" functionality.
 #ifndef HID_USAGE_DIGITIZER_CONTACT_ID
 #define HID_USAGE_DIGITIZER_CONTACT_ID 0x51
 #endif
+#ifndef HID_USAGE_DIGITIZER_CONFIDENCE
+#define HID_USAGE_DIGITIZER_CONFIDENCE 0x47
+#endif
 
 // Maximum number of simultaneous contacts to track
 #define TOUCHPAD_MAX_CONTACTS 5
@@ -36,11 +39,13 @@ surface, enabling "touchpad as modifier" functionality.
 // Touchpad state structure
 struct TouchpadState
 {
-    int ContactCount;           // Number of fingers currently touching
+    int ContactCount;           // Number of fingers currently touching (including palms)
+    int FingerCount;            // Valid finger contacts (Confidence=1 only, excluding rejected)
     bool IsContactActive;       // True if any finger is touching
     DWORD LastContactTime;      // Tick count of last contact change
     bool Initialized;           // True if Raw Input registration succeeded
     HANDLE DeviceHandle;        // Handle to the touchpad device (if found)
+    bool ConfidenceSupported;   // True if device reports Confidence bit
 };
 
 // Global touchpad state
@@ -59,10 +64,16 @@ bool TouchpadProcessRawInput(LPARAM lParam);
 // Get current contact count
 inline int TouchpadGetContactCount() { return g_Touchpad.ContactCount; }
 
+// Get valid finger count (Confidence=1 only, excluding rejected palms)
+inline int TouchpadGetFingerCount() { return g_Touchpad.FingerCount; }
+
 // Check if touchpad has any contact
 inline bool TouchpadHasContact() { return g_Touchpad.IsContactActive; }
 
 // Check if touchpad detection is available
 inline bool TouchpadIsAvailable() { return g_Touchpad.Initialized; }
+
+// Check if device supports Confidence bit for palm rejection
+inline bool TouchpadHasConfidenceSupport() { return g_Touchpad.ConfidenceSupported; }
 
 #endif // touchpad_h
